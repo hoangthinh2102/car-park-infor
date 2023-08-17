@@ -1,0 +1,236 @@
+{
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/car-parking/import-csv": {
+      "post": {
+        "operationId": "importCsvFile",
+        "summary": "",
+        "description": "Batch job import csv file",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "car-park"
+        ]
+      }
+    },
+    "/car-parking/pagination": {
+      "get": {
+        "operationId": "paginate",
+        "summary": "",
+        "description": "Get car park pagination",
+        "parameters": [
+          {
+            "name": "searchKey",
+            "required": false,
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "type": "number",
+            "x-example": 1
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "type": "number",
+            "x-example": 10
+          },
+          {
+            "name": "sort",
+            "required": false,
+            "in": "query",
+            "description": "Sort ASC || DESC",
+            "enum": [
+              "ASC",
+              "DESC"
+            ],
+            "type": "string"
+          },
+          {
+            "name": "freeParking",
+            "required": false,
+            "in": "query",
+            "enum": [
+              "YES",
+              "NO"
+            ],
+            "type": "string"
+          },
+          {
+            "name": "nightParking",
+            "required": false,
+            "in": "query",
+            "description": "By using sqlite3, 1 mean true, 0 mean false",
+            "enum": [
+              1,
+              0
+            ],
+            "type": "number"
+          },
+          {
+            "name": "minHeight",
+            "required": false,
+            "in": "query",
+            "type": "number"
+          },
+          {
+            "name": "maxHeight",
+            "required": false,
+            "in": "query",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "car-park"
+        ]
+      }
+    },
+    "/user": {
+      "post": {
+        "operationId": "userCreate",
+        "summary": "",
+        "description": "Create User",
+        "parameters": [
+          {
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateUserDto"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "user"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
+    "/user/{id}": {
+      "patch": {
+        "operationId": "updateUserById",
+        "summary": "",
+        "description": "Update user by id",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "type": "number"
+          },
+          {
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateFavoriteCarParkDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "user"
+        ],
+        "consumes": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "api-carpark API Documentation",
+    "description": "carpark-service | [swagger.json](swagger.json) | [swagger-2.0.json](swagger-2.0.json)",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "tags": [],
+  "swagger": "2.0",
+  "host": "127.0.0.1:3000",
+  "schemes": [
+    "http"
+  ],
+  "basePath": "/",
+  "definitions": {
+    "CreateUserDto": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "first_name",
+        "last_name",
+        "email",
+        "password"
+      ]
+    },
+    "UpdateFavoriteCarParkDto": {
+      "type": "object",
+      "properties": {
+        "car_park_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "car_park_ids"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "bearer": {
+      "scheme": "bearer",
+      "bearerFormat": "JWT",
+      "type": "apiKey",
+      "name": "authorization",
+      "in": "header"
+    }
+  },
+  "x-components": {}
+}
